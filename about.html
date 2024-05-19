@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Canvas Shapes</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    /* }<link rel="stylesheet" href="styles.css"> */
+    }
+
+  </style>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <label for="shape">Shape:</label>
+  <select id="shape">
+    <option value="freehand">Freehand</option>
+    <option value="circle">Circle</option>
+    <option value="square">Square</option>
+  </select>
+  
+  <label for="color">Color:</label>
+  <input type="color" id="color">
+  
+  <button onclick="toggleDrawingMode()">Toggle Drawing Mode</button>
+  <button onclick="clearCanvas()">Clear</button>
+  <button onclick="uploadShape()">Upload Shape</button>
+  <button onclick="window.location.replace('/index.html')">Go back to main page</button>
+
+  <p id="modeText"></p>
+  
+  <canvas id="canvas" width="400" height="400"></canvas>
+  
+  <script>
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+    var isDrawingMode = false;
+    var modeText = document.getElementById("modeText");
+    var shapes = [];
+    var currentShape = [];
+    
+    function toggleDrawingMode() {
+      isDrawingMode = !isDrawingMode;
+      if (isDrawingMode) {
+        modeText.textContent = "Current Mode: Drawing Mode";
+        canvas.addEventListener("mousedown", startDrawing);
+        canvas.addEventListener("mousemove", draw);
+        canvas.addEventListener("mouseup", endDrawing);
+      } else {
+        modeText.textContent = "Current Mode: Standard Mode";
+        canvas.removeEventListener("mousedown", startDrawing);
+        canvas.removeEventListener("mousemove", draw);
+        canvas.removeEventListener("mouseup", endDrawing);
+      }
+    }
+    
+    function startDrawing(event) {
+      var rect = canvas.getBoundingClientRect();
+      var x = event.clientX - rect.left;
+      var y = event.clientY - rect.top;
+      
+      currentShape = [];
+      currentShape.push({ x: x, y: y });
+    }
+    
+    function draw(event) {
+      if (!isDrawingMode || event.buttons !== 1) return; // Only draw when left mouse button is pressed
+      
+      var rect = canvas.getBoundingClientRect();
+      var x = event.clientX - rect.left;
+      var y = event.clientY - rect.top;
+      
+      currentShape.push({ x: x, y: y });
+      
+      drawShape();
+    }
+    
+    function endDrawing() {
+      if (!isDrawingMode) return;
+      
+      shapes.push(currentShape);
+      currentShape = [];
+    }
+    
+    function drawShape() {
+      var shape = document.getElementById("shape").value;
+      var color = document.getElementById("color").value;
+      
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = color;
+      
+      shapes.forEach(function(shapePoints) {
+        if (shapePoints.length < 2) return;
+        
+        context.beginPath();
+        context.moveTo(shapePoints[0].x, shapePoints[0].y);
+        
+        for (var i = 1; i < shapePoints.length; i++) {
+          context.lineTo(shapePoints[i].x, shapePoints[i].y);
+        }
+        
+        context.stroke();
+      });
+      
+      if (shape === "freehand") {
+        context.beginPath();
+        context.moveTo(currentShape[0].x, currentShape[0].y);
+        
+        for (var j = 1; j < currentShape.length; j++) {
+          context.lineTo(currentShape[j].x, currentShape[j].y);
+        }
+        
+        context.stroke();
+      } else if (shape === "circle") {
+        shapes.forEach(function(shapePoints) {
+          if (shapePoints.length !== 2) return;
+          
+          var startX = shapePoints[0].x;
+          var startY = shapePoints[0].y;
+          var endX = shapePoints[1].x;
+          var endY = shapePoints[1].y;
+          var radius = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+          
+          context.beginPath();
+          context.arc(startX, startY, radius, 0, 2 * Math.PI);
+          context.fill();
+        });
+      } else if (shape === "square") {
+        shapes.forEach(function(shapePoints) {
+          if (shapePoints.length !== 2) return;
+          
+          var startX = shapePoints[0].x;
+          var startY = shapePoints[0].y;
+          var endX = shapePoints[1].x;
+          var endY = shapePoints[1].y;
+          
+          var width = Math.abs(endX - startX);
+          var height = Math.abs(endY - startY);
+          var x = Math.min(startX, endX);
+          var y =Math.min(startY, endY);
+          
+          context.fillRect(x, y, width, height);
+        });
+      }
+    }
+    
+    function uploadShape() {
+      var shape = document.getElementById("shape").value;
+      var color = document.getElementById("color").value;
+      
+      if (shape === "circle" || shape === "square") {
+        var startX = parseInt(prompt("Enter the starting X coordinate:"));
+        var startY = parseInt(prompt("Enter the starting Y coordinate:"));
+        var endX = parseInt(prompt("Enter the ending X coordinate:"));
+        var endY = parseInt(prompt("Enter the ending Y coordinate:"));
+        
+        if (isNaN(startX) || isNaN(startY) || isNaN(endX) || isNaN(endY)) {
+          alert("Invalid coordinates. Please enter valid numeric values.");
+          return;
+        }
+        
+        shapes.push([{ x: startX, y: startY }, { x: endX, y: endY }]);
+        drawShape();
+      } else {
+        alert("The selected shape does not support uploading.");
+      }
+    }
+    
+    function clearCanvas() {
+      shapes = [];
+      currentShape = [];
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  </script>
+</body>
+</html>

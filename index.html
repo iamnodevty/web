@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="./files.jpeg">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6R2X08GCCK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6R2X08GCCK');
+</script>
+
+<body>
+<div id="loginPage">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password or Recovery PIN">
+    <!-- <input type="number" id="usr" placeholder="Enter PIN Here"> -->
+    <button onclick="checkLogin()">Login</button>
+    <hr>
+    <h2> If you previously logged in and added a 'login__' cookie, click the button below to login using CookieAuth.</h2>
+    <h4> Note that the CookieAuth FUNCTION might not work on the W3Spaces preview.</h4>
+    <button onclick="checkookiee()"> Login with CookieAuth</button>
+    <hr>
+    <h4> A quick reminder:</h4>
+    <!-- <button onclick="window.location.replace('./IForgor.html');">IForgorPassword tool</button> -->
+    <!-- <p>This is the password recovery tool. If all else fails, please log into <b>W3Spaces</b> to change the password.</p> -->
+    <h1> The password recovery tool has been updated, and now the root owner has a PIN(recovery PIN) which you can use to log in. Please ask root user! </h1>
+
+<form>
+
+</form>
+</div>
+<div id="welcomePage" style="display: none;">
+    <h2>Welcome, 'user'!</h2>
+    <h3>You have succesfully logged in to the settings page.</h3>
+    <!-- <button onclick="alert('This feature was outdated in JSv1.2. Please contact root admin/log onto W3Spaces to change password!!!')">Change Login Password</button> -->
+    <hr>
+    <h1>Other tools</h1>
+    <button id="myButton" onclick="showText()">Show Recovery PIN for 5sec</button>
+    <p id="displayText"></p>
+    <button onclick="changepwd()">Logout of 'root'</button>
+    
+    <button id="the" onclick="srvr()">Show details of server, client etc.</button>
+    <hr>
+    <h1>Login Cookie Settings</h1>
+    <button onclick="setCookie('login', 'ok', 40)">Add cookie for login</button>
+    <button onclick="del()">Remove cookie for login</button>
+    <!-- <button onclick="checkcoo()">Check if cookie for login is present</button> -->
+    <h1> Custom Cookie Preferences</h1>
+    <button onclick="listCookies()">List all cookies</button>
+    <button onclick="makeCust()">Make new cookie</button>
+    <button onclick="deleteCookie()">Delete a custom cookie</button>
+
+
+    <hr>
+    <h1><b>experimental</b> features:</h1>
+    <button 
+    <button onclick="window.location.replace('/about.html')">Shape Drawer</button>
+    <h2>Make sure to have the login cookie in order to use the experimental features!</h2>
+    <!-- <form>
+        <input type="text" id="amt" placeholder="Enter service amount(HKD)" value="HKD$">
+          <label for="fname">First name:</label><br>
+  <input type="text" id="fname" name="fname" placeholder="Enter customer name"><br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" name="lname"placeholder="Enter Product/service" ><br>
+  <input type="radio" id="html" name="fav_language" value="cash"><br>
+  <label for="html">Cash</label><br>
+  <input type="radio" id="css" name="fav_language" value="alipay"><br>
+  <label for="css">AliPay ezPay</label><br>
+  <input type="radio" id="javascript" name="fav_language" value="other"><br>
+  <label for="javascript">Other</label><br>
+  //<button id="myButton" onclick="alert(Exitcode1(ok))">Send Request</button>
+  <button onclick="alert('Approvalstate 200--OK')">Send</button>
+  <p id="displayTexts"></p>
+  <button onclick="alert('Order approved! Paid amount:' + amt.value + ';Name:' + fname.value + ';Payment method:' + fav_language.value + '; Order put in database(code 200--OK)')">Submit order for approval</button>
+</form> -->
+    <!-- <p>Click on the images below to download. Note that files that are not photos can <b>NOT</b> downloaded at the time being.</p> -->
+</div>
+<div class="berry"></div>
+<script src="script.js"></script>
+</body>
+</html>
